@@ -9,7 +9,7 @@ check out wiki for more detailed tutorial.
 Creating a table
 
 hwrapper=Hwrapper()
-hwrapper.connectionParameters("host","port", False)     // third argument false if you are not using https
+hwrapper.connectionParameters("host","port", False)     // third argument set to false if you are not using https
 hwrapper.setAcceptType("json")
 columnFamilies={"cf","cf1"}
 hwrapper.create_table("table_name",columnFamilies)
