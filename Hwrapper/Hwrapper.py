@@ -162,7 +162,25 @@ class Hwrapper:
         return response.status
     
     
-
+    def get_RowBy_ID(self,rowID,table_Name):
+        if self.host != None or self.port!=None:
+            try :
+                rowID=urllib.parse.quote(rowID)
+                requestObj=request.Request(self.getBaseUrl()+str("/")+str(table_Name)+"/"+rowID)
+                requestObj.add_header("Accept",str(self.content_type))
+                if self.content_type=="application/json":
+                    response=json.loads(request.urlopen(requestObj).read().decode('utf-8'))
+                    return response
+                else:
+                    response=El.fromstring(request.urlopen(requestObj).read())
+                    return response
+            except:
+                print(" Error:",sys.exc_info()[0])
+                raise   
+        else:
+            print("Please assign host port before querying table schema")
+            raise IOError
+        return
 
         
     
