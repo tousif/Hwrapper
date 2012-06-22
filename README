@@ -4,6 +4,7 @@ Hwrapper is hbase rest wrapper for python 3+ .
 
 Common Usage :
 
+start your hbase rest  $bin/hbase rest start -p 9300    (Default port is 8080)
 check out wiki for more detailed tutorial.
 
 Creating a table
