@@ -16,6 +16,10 @@ columnFamilies={"cf","cf1"}
 hwrapper.create_table("table_name",columnFamilies)
 
 
+get Row data by ID
+
+hwrapper.get_RowBy_ID("0000000-120529115546748")
+
 Dropping a table
 
 hwrapper.drop_table("table_name")
