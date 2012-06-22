@@ -1,0 +1,30 @@
+Hwrapper is hbase rest wrapper for python 3+ .
+
+
+
+Common Usage :
+
+check out wiki for more detailed tutorial.
+
+Creating a table
+
+hwrapper=Hwrapper()
+hwrapper.connectionParameters("host","port", False)     // third argument false if you are not using https
+hwrapper.setAcceptType("json")
+columnFamilies={"cf","cf1"}
+hwrapper.create_table("table_name",columnFamilies)
+
+
+Dropping a table
+
+hwrapper.drop_table("table_name")
+
+
+Displaying table schema 
+
+hwrapper.table_schema("table_name")
+
+
+Listing all tables from hbase
+
+hwrapper.list_tables()
