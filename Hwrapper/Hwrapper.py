@@ -1,5 +1,5 @@
 '''
-Copyright (C) <2012> <tousif.pasha@gmail.com>
+Copyright (C) <2012> Tousif Khazi <tousif.pasha@gmail.com>
 
 Permission is hereby granted, free of charge, 
 to any person obtaining a copy of this software 
@@ -24,7 +24,7 @@ import base64
 import json
 import xml.etree.ElementTree as El
 import sys
-
+from collections import OrderedDict
 
 class Hwrapper:
     
@@ -110,7 +110,7 @@ class Hwrapper:
     def table_schema(self,table_Name):
         if self.host != None or self.port!=None:
             try :
-                requestObj=request.Request(self.getBaseUrl()+str("/"+table_Name+"/schema"))
+                requestObj=request.Request(self.getBaseUrl()+str("/"+urllib.parse.urlencode(table_Name)+"/schema"))
                 requestObj.add_header("Accept",str(self.content_type))
                 if self.content_type=="application/json":
                     response=json.loads(request.urlopen(requestObj).read().decode('utf-8'))
@@ -135,7 +135,7 @@ class Hwrapper:
                 schema=schema+"<ColumnSchema name='"+columns+"' />"
             
         schema=schema+"</TableSchema>"
-        requestObj=request.Request(self.getBaseUrl()+str("/")+str(table_Name)+"/schema")
+        requestObj=request.Request(self.getBaseUrl()+str("/")+urllib.parse.urlencode(str(table_Name))+"/schema")
         requestObj.get_method = lambda: 'POST'
         requestObj.add_header("Content-length", len(schema))
         requestObj.add_header("Content-type","text/xml")
@@ -152,7 +152,7 @@ class Hwrapper:
         
     
     def drop_table(self,table_Name):
-        requestObj=request.Request(self.getBaseUrl()+str("/")+str(table_Name)+"/schema")
+        requestObj=request.Request(self.getBaseUrl()+str("/")+urllib.parse.urlencode(str(table_Name))+"/schema")
         requestObj.get_method = lambda: 'DELETE'
         response= request.urlopen(requestObj)
         
@@ -162,7 +162,10 @@ class Hwrapper:
         return response.status
     
     
+
     def get_RowBy_ID(self,rowID,table_Name):
+        listed=[]
+        
         if self.host != None or self.port!=None:
             try :
                 rowID=urllib.parse.quote(rowID)
@@ -170,26 +173,37 @@ class Hwrapper:
                 requestObj.add_header("Accept",str(self.content_type))
                 if self.content_type=="application/json":
                     response=json.loads(request.urlopen(requestObj).read().decode('utf-8'))
-                    return response
+                    for key,value in response.items():
+                        if isinstance(value, list):
+                            someval=value.pop()
+                            for k2,v2 in someval.items():
+                                #print(k2,v2)
+                                if k2 == "Cell":
+                                    for key in v2:
+                                        list1=dict()
+                                        object=v2.pop()
+                                        for k3,v3 in object.items():
+                                            if isinstance(v3,int):
+                                                list1[k3]=v3
+                                            else:
+                                                #print(k3,base64.b64decode(bytes(v3,"utf-8")))
+                                                list1[k3]=str(base64.b64decode(bytes(v3,"utf-8")))
+                                                
+                                        listed.append(list1)        
+                    return listed
                 else:
                     response=El.fromstring(request.urlopen(requestObj).read())
                     return response
+                
             except:
                 print(" Error:",sys.exc_info()[0])
                 raise   
         else:
             print("Please assign host port before querying table schema")
             raise IOError
-        return
-
         
+        
+        return
     
+           
     
-    
-#hwrapper=Hwrapper()
-#hwrapper.connectionParameters("10.0.1.47","9300", False)
-#hwrapper.setAcceptType("xml")
-#list={"cf","cf1"}
-#print(hwrapper.create_table("test1",list))
-
-#print(hwrapper.drop_table("test1"))
