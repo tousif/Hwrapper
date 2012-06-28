@@ -11,36 +11,32 @@ check out wiki for more detailed tutorial.
 
 Creating a table
 ----------------
-<pre>
+
 hwrapper=Hwrapper()
 hwrapper.connectionParameters("host","port", False)     // third argument set to false if you are not using https
 hwrapper.setAcceptType("json")
 columnFamilies={"cf","cf1"}
 hwrapper.create_table("table_name",columnFamilies)
-</pre>
+
 
 get Row data by ID  (decoded base64 values)
 -------------------------------------------
-<pre>
+
 hwrapper.get_RowBy_ID("0000000-120529115546748") // outputs list of dicts, dicts contain column names and values
-</pre>
+
 
 Dropping a table
 ----------------
-<pre>
+
 hwrapper.drop_table("table_name")
-</pre>
 
 
 Displaying table schema 
 -----------------------
 
-<pre>
 hwrapper.table_schema("table_name")
-</pre>
+
 
 Listing all tables from hbase
 -----------------------------
-<pre>
 hwrapper.list_tables()
-</pre>
