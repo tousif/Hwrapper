@@ -205,5 +205,21 @@ class Hwrapper:
         
         return
     
-           
+    def get_RowBy_Column(self,value,table):
+        encode=str(base64.b64encode((value).encode("utf-8")))
+        print(encode)
+        encode.replace("'", "").replace("b", "");
+#        schema='<Scanner startRow="" endRow="" batch="33854"><column>Y2Y6aW5zdA==</column></Scanner>'
+        schema= '<Scanner startRow="" endRow="" batch="4" ><filter>{"latestVersion":true,"family":"Y2Y6aW5zdA==","op":"EQUAL","type":"SingleColumnValueFilter","comparator":{"value":"'+str(encode.replace("'", "").replace("b", ""))+'","type":"BinaryComparator"}}</filter></Scanner>'
+        print(schema);
+        requestObj=request.Request(self.getBaseUrl()+str("/")+table+"/scanner")
+        requestObj.get_method = lambda: 'POST'
+        requestObj.add_header("Content-length", len(schema))
+        requestObj.add_header("Content-type","text/xml")
+        response= request.urlopen(requestObj,data=(schema).encode(encoding='utf_8'))
+        print(response.getheader("location"))
     
+        response=request.urlopen(response.getheader("location"))
+      
+        print(response.read().decode("utf-8"))
+        return
