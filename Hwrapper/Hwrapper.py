@@ -228,8 +228,10 @@ class Hwrapper:
         requestObj.get_method = lambda: 'GET'
         requestObj.add_header("Accept",str(self.content_type))
         response=request.urlopen(requestObj)
-        
-        return response.read().decode("utf-8")
+        if(response.getcode()!=204):
+            return response.read().decode("utf-8")
+        else :
+            return json.dumps({"status":str(response.getcode())})
         
     
     
