@@ -42,4 +42,4 @@ Listing all tables from hbase
 hwrapper.list_tables()
 
 
-Scanner creating and deletion: (Filter bu single column)
+Scanner creation and deletion: (Filter by single column value)
