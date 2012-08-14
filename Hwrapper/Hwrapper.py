@@ -220,18 +220,21 @@ class Hwrapper:
         requestObj.add_header("Accept",str(self.content_type))
         response= request.urlopen(requestObj,data=(schema).encode(encoding='utf_8'))
         self.scannerURL=response.getheader("location")
-       
-        
-        requestObj=request.Request(response.getheader("location"))
+        return
+    
+    def getNext(self):
+        requestObj=request.Request(self.scannerURL)
         requestObj.get_method = lambda: 'GET'
         requestObj.add_header("Accept",str(self.content_type))
         response=request.urlopen(requestObj)
         
         return response.read().decode("utf-8")
+        
     
     
     def deleteScanner(self):
         requestObj=request.Request(self.scannerURL)
         requestObj.get_method = lambda: 'DELETE'
         res=request.urlopen(requestObj)
+        self.scannerURL=None
         return res
