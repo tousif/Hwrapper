@@ -34,6 +34,7 @@ class Hwrapper:
         self.host=None
         self.content_type=None
         self.requestObject=None
+        self.scannerURL=None
         
     def setAcceptType(self,content_type):
         if content_type.lower() == "json":
