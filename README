@@ -1,6 +1,6 @@
-Hwrapper is python 3+ wrapper for hbase rest.
+Hwrapper is python 3+ wrapper for hbase REST.
 
-(alternate download from pypi  http://pypi.python.org/pypi/Hwrapper/0.1 )
+(pypi  http://pypi.python.org/pypi/Hwrapper/0.1 )
 
 
 
@@ -40,3 +40,6 @@ hwrapper.table_schema("table_name")
 Listing all tables from hbase
 -----------------------------
 hwrapper.list_tables()
+
+
+Scanner creating and deletion: (Filter bu single column)
