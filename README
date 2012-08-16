@@ -43,3 +43,27 @@ hwrapper.list_tables()
 
 
 Scanner creation and deletion: (Filter by single column value)
+--------------------------------------------------------------
+
+hwrapper.get_RowBy_Column(columnvalue,"tablename")
+
+jsonRows=json.loads(hwrapper.getNext())
+while(jsonRows.get("status")!='204'):
+     jsonRows=json.loads(hwrapper.getNext())
+     if(jsonRows.get("status")=='204'):
+        break
+     print(jsonRows)
+hwrapper.deleteScanner()
+
+
+
+Deleting scanner
+----------------------------
+  hwrapper.deleteScanner()
+
+
+
+
+
+
+
