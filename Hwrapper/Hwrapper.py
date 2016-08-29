@@ -1,6 +1,8 @@
 '''
 Copyright (C) <2012> Tousif Khazi <tousif.pasha@gmail.com>
 
+This application will help user connect to HBase through REST bypassing limitations of Thrift on python 3+
+
 Permission is hereby granted, free of charge, 
 to any person obtaining a copy of this software 
 and associated documentation files (the "Software"),
